@@ -1,2 +1,3 @@
 .coverage
 .pre-commit-config.yaml
+common.txt
