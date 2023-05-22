@@ -1,9 +1,9 @@
 Run the below code first:
 
 ```
-pre-commit install
+pip install -r common.txt
 ```
 
 ```
-pip install -r common.txt
+pre-commit install
 ```
