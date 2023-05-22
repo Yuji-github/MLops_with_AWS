@@ -14,6 +14,9 @@ WORKDIR /temp
 COPY . .
 RUN pip install -r src/requirements.txt
 
+# expose port for Jenkins
+EXPOSE 8080
+
 # create mountpoint
 VOLUME /temp
 
