@@ -26,13 +26,13 @@ Either way, it runs automatically like the below figure.
   <img src="images/pre-commit-results.png" alt="pre-commit-results" width="500" height="200">
 </p>
 
-More information about
-pre-commit: https://pre-commit.com/
-black: https://github.com/psf/black
+More information about <br>
+pre-commit: https://pre-commit.com/ <br>
+black: https://github.com/psf/black <br>
 
-*additional material for code convention:
-Docstring: https://peps.python.org/pep-0257/
-Type Hints: https://peps.python.org/pep-0484/
+*additional material for code convention: <br>
+Docstring: https://peps.python.org/pep-0257/ <br>
+Type Hints: https://peps.python.org/pep-0484/ <br>
 Unit Test: https://docs.python.org/3/library/unittest.html and start with test_
 
 
