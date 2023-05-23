@@ -1,7 +1,7 @@
 # Step 0
 ## Pre-Commit Hooks
 
-Run the below code right after clone this repo from your terminal.
+Run the below 2 codes right after clone this repo from your terminal.
 ```
 pip install -r common.txt
 ```
