@@ -1,3 +1,5 @@
 .coverage
 .pre-commit-config.yaml
 common.txt
+images
+README.md
