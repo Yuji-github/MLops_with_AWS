@@ -13,5 +13,15 @@ Step 5:
 from settings import URI
 import pandas as pd
 
+
+def _import_csv(filename: str) -> pd.DataFrame:
+    """Import data set with given dir
+    :param filename:
+    :return:
+        pd.Dataframe
+    """
+    return pd.read_csv(filename)
+
+
 if __name__ == "__main__":
-    df = pd.read_csv("Stars.csv")
+    df = _import_csv("src/Stars.csv")
