@@ -1,2 +1,3 @@
-wheel
-pytest-cov
+mlflow
+pandas
+numpy
