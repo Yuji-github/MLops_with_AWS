@@ -54,6 +54,9 @@ class TestEDA(TestCase):
         pd.testing.assert_frame_equal(exp_df, self.eda.df, check_dtype=False)
 
     def test_spread_df(self):
+        """Testing _spread_df
+        :except: 4 np.arrays and each return has different shapes
+        """
         df = pd.DataFrame({"Color": [1, 2, 3, 4, 5], "Spectral_Class": [1, 2, 3, 4, 5], "Type": [1, 2, 3, 4, 5]})
 
         self.eda.df = df
