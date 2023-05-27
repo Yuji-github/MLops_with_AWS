@@ -1,10 +1,8 @@
 import numpy as np
+from mlflow.models import ModelSignature
 from src.train_interface import TrainInterface
 from sklearn.metrics import accuracy_score
 from typing import Any
-import mlflow
-import mlflow.sklearn
-import mlflow.lightgbm
 
 
 class Train(TrainInterface):
@@ -58,12 +56,12 @@ class Train(TrainInterface):
 
         self.mlflow.log_metric("accuracy", accuracy)
 
-    def _logging_model_to_mlflow(self) -> None:
+    def _logging_model_to_mlflow(self, signature: ModelSignature) -> None:
         """Logging the model and model name to MLflow
 
         :return None:
         """
         if self.model_name is "lightGBM":
-            self.mlflow.lightgbm.log_model(self.model, self.model_name)
+            self.mlflow.lightgbm.log_model(self.model, artifact_path=self.model_name, signature=signature)
         elif self.model_name is "GradientBoost":
-            self.mlflow.sklearn.log_model(self.model, self.model_name)
+            self.mlflow.sklearn.log_model(self.model, artifact_path=self.model_name, signature=signature)

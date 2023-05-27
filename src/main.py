@@ -16,6 +16,7 @@ import logging
 import mlflow
 from sklearn.ensemble import GradientBoostingClassifier
 import lightgbm as lgb
+from mlflow.models.signature import infer_signature
 
 from train import Train
 from eda import EDA
@@ -24,9 +25,9 @@ from settings import URI
 
 def _import_csv(filename: str) -> pd.DataFrame:
     """Import data set with given dir
+
     :param filename:
-    :return:
-        pd.Dataframe
+    :return pd.Dataframe:
     """
     return pd.read_csv(filename)
 
@@ -65,9 +66,12 @@ if __name__ == "__main__":
                             n_estimators=n_estimators,
                             max_depth=max_depth,
                         )
+                        signature = infer_signature(x_train, y_pred)  # specify input and output formats
+
                         accuracy = train._evaluate(y_test, y_pred)
+
                         train._logging_params_to_mlflow(
                             learning_rate=learning_rate, n_estimators=n_estimators, max_depth=max_depth
                         )
                         train._logging_eval_to_mlflow(accuracy)
-                        train._logging_model_to_mlflow()
+                        train._logging_model_to_mlflow(signature)
