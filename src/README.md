@@ -12,6 +12,10 @@ Color -- General Color of Spectrum
 Spectral_Class -- O,B,A,F,G,K,M / SMASS - https://en.wikipedia.org/wiki/Asteroid_spectral_types
 Type -- Red Dwarf, Brown Dwarf, White Dwarf, Main Sequence , Super Giants, Hyper Giants
 
+<p align="center">
+  <img src="../images/star-type.png" alt="star-type" width="400" height="300">
+</p>
+
 TARGET:
 Type  from 0 to 5
 

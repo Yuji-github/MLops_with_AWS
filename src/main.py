@@ -12,6 +12,8 @@ Step 5:
 """
 from settings import URI
 import pandas as pd
+from eda import EDA
+import logging
 
 
 def _import_csv(filename: str) -> pd.DataFrame:
@@ -25,3 +27,10 @@ def _import_csv(filename: str) -> pd.DataFrame:
 
 if __name__ == "__main__":
     df = _import_csv("src/Stars.csv")
+    this_eda = EDA(df)
+
+    if this_eda._check_missing_data():
+        logging.warning("Missing Data Detected")
+
+    this_eda._replace_df_cols()
+    x_train, x_test, y_train, y_test = this_eda._spread_df()
