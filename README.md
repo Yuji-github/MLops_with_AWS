@@ -37,3 +37,56 @@ Unit Test: https://docs.python.org/3/library/unittest.html and start with test_ 
 
 
 # Step 1
+## Jenkins
+Before downloading, Jenkins should check your PC system. <br>
+If you don't have JAVA, you need to download JAVA and Git Bah. <br>
+Then you check [System properties -> Environment Variables -> path], System variables has JAVA-HOME and right Path condition. <br>
+
+### How to run Jenkins at localhost
+- Download Jenkins <br>
+1. Run the below code from your terminal(Pycharm)
+
+```
+java -jar jenkins.war
+```
+2. C:\Users\User\Desktop(Jenkins folder location) >java -jar jenkins.war
+3. Open browser, Type below port number for Jenkins
+
+```
+
+localhost:8080
+```
+When using Jenkins, do steps 1, 2 and 3 every time. <br>
+
+### How to ues Jenkins
+When you open the dashboard, click New Item <br>
+
+<p>
+<img src="images/Jenkins-page.png" alt="Jenkins" width="400" height="300">
+</p>
+
+Look at the picture above <br>
+
+- An item name = your project name
+- Click Pipeline
+
+Next step is What do you want to build. <br>
+
+Please follow the picture below
+<p>
+<img src="images/jenkins-configure1.png" alt="Jenkins-configure1" width="400" height="300">
+</p>
+
+What do you want to run
+- Set ***** (every minute) run
+
+<p>
+<img src="images/jenkins-configure2.png" alt="Jenkins-configure2" width="400" height="300">
+</p>
+
+Make Pipeline script
+- Click try sample pipeline
+
+<p>
+<img src="images/jenkins-configure3.png" alt="Jenkins-configure3" width="400" height="300">
+</p>
