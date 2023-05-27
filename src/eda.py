@@ -20,6 +20,7 @@ class EDA:
 
     def _check_missing_data(self) -> bool:
         """Checking missing values
+
         :return bool:
         """
         missing_values: pd.Series = self.df.isnull().sum()
@@ -27,6 +28,7 @@ class EDA:
 
     def _replace_df_cols(self) -> None:
         """replace the Color and Spectral_Class columns with int
+
         :return None:
         """
 
