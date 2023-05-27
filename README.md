@@ -86,7 +86,28 @@ What do you want to run
 
 Make Pipeline script
 - Click try sample pipeline
+- stage is title
+- echo is comment
 
 <p>
 <img src="images/jenkins-configure3.png" alt="Jenkins-configure3" width="400" height="300">
+</p>
+
+Click Build Now you got the picture below <br>
+
+<p>
+<img src="images/jenkins_StageView.png" alt="stageView" width="400" height="300">
+</p>
+
+If the build is red, it's a failure. You should check the #number -> console output, then fix your code update and run it again.<br>
+
+Next step, click the Pipeline Syntax <br>
+- Checkout: Check out from version control
+- SCM -> Git
+- Repositories -> Git clone URL
+- Credentials -> private access ID & password (Company project)
+- Save it, get script
+
+<p>
+<img src="images/jenkins_pipline.png" alt="pipline" width="400" height="300">
 </p>
