@@ -34,9 +34,7 @@ def _import_csv(filename: str) -> pd.DataFrame:
 
 if __name__ == "__main__":
     mlflow.set_tracking_uri(URI)
-    # experiment_id = mlflow.create_experiment("Training Experiment")
-    experiment_id = mlflow.set_experiment("training experiment")
-    experiment = mlflow.get_experiment_by_name("training experiment")
+    mlflow_experiment = mlflow.set_experiment("Mlops-with-AWS")
 
     df = _import_csv("src/Stars.csv")
     this_eda = EDA(df)
@@ -57,7 +55,7 @@ if __name__ == "__main__":
             for n_estimators in tqdm(train.n_estimators_range, leave=False):
                 for max_depth in tqdm(train.max_depth_range, leave=False):
 
-                    with mlflow.start_run(experiment_id=experiment.experiment_id):
+                    with mlflow.start_run(experiment_id=mlflow_experiment.experiment_id, tags={"version": "v1"}):
                         y_pred = train._train(
                             x_train,
                             y_train,
