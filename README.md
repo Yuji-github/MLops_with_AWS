@@ -107,7 +107,16 @@ Next step, click the Pipeline Syntax <br>
 - Repositories -> Git clone URL
 - Credentials -> private access ID & password (Company project)
 - Save it, get script
+- bat -> for windows command
+
 
 <p>
-<img src="images/jenkins_pipline.png" alt="pipline" width="400" height="300">
+<img src="images/jenkins_pipeline.png" alt="pipline" width="400" height="300">
+</p>
+
+This time, created three build. First is "check it" for connect Git success. Second is "build" for create Git clone. Third is "unit test" for run unit test command.
+
+
+<p>
+<img src="images/jenkins_stageview2.png" alt="stageview2" width="300" height="200">
 </p>
