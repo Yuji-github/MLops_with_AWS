@@ -107,7 +107,7 @@ Next step, click the Pipeline Syntax <br>
 - Repositories -> Git clone URL
 - Credentials -> private access ID & password (Company project)
 - Save it, get script
-- bat -> for windows command
+- bat -> for windows command (This time, build docker)
 
 
 <p>
@@ -119,4 +119,35 @@ This time, created three build. First is "check it" for connect Git success. Sec
 
 <p>
 <img src="images/jenkins_stageview2.png" alt="stageview2" width="300" height="200">
+</p>
+
+# Step 2
+## docker
+Docker is a tool for running your applications inside containers and similar in concept to Virtual Machines.<br>
+You should create Dockerfile on your Pycharm. Docker file name MUST be 'Dockerfile'. <br>
+- Dockerfile works top to bottom <br>
+- Dockerfile reserved word are the picture below <br>
+
+<p>
+<img src="images/docker_reserved_word.png" alt="docker" width="400" height="300">
+</p>
+
+Created Dockerfile is the picture below <br>
+
+<p>
+<img src="images/dockerfile.png" alt="dockerfile" width="400" height="250">
+</p>
+
+Run docker
+- Name and optionally a tag in the name:tag format
+
+```
+docker build -t test:1
+```
+
+```
+docker images
+```
+<p>
+<img src="images/docker_images.png" alt="docker images" width="300" height="100">
 </p>
