@@ -107,7 +107,7 @@ Next step, click the Pipeline Syntax <br>
 - Repositories -> Git clone URL
 - Credentials -> private access ID & password (Company project)
 - Save it, get script
-- bat -> for windows command (This time, build docker)
+- bat -> for windows command (This time, build docker )
 
 
 <p>
@@ -121,9 +121,15 @@ This time, created three build. First is "check it" for connect Git success. Sec
 <img src="images/jenkins_stageview2.png" alt="stageview2" width="300" height="200">
 </p>
 
+More information about <br>
+CI/CD :https://www.simplilearn.com/tutorials/devops-tutorial/continuous-delivery-and-continuous-deployment
+
 # Step 2
 ## docker
-Docker is a tool for running your applications inside containers and similar in concept to Virtual Machines.<br>
+Docker is a tool for running your applications inside containers and similar in concept to Virtual Machines (can be run on any OS).<br>
+Containers are great for continuous integration and continuous delivery (CI/CD) workflows. <br>
+- Download and install Docker <br>
+
 You should create Dockerfile on your Pycharm. Docker file name MUST be 'Dockerfile'. <br>
 - Dockerfile works top to bottom <br>
 - Dockerfile reserved word are the picture below <br>
@@ -138,7 +144,7 @@ Created Dockerfile is the picture below <br>
 <img src="images/dockerfile.png" alt="dockerfile" width="400" height="250">
 </p>
 
-Run docker
+### How to run docker
 - Name and optionally a tag in the name:tag format
 
 ```
@@ -148,6 +154,17 @@ docker build -t test:1
 ```
 docker images
 ```
+
+An image is a read-only template with instructions for creating a Docker container. <br>
 <p>
 <img src="images/docker_images.png" alt="docker images" width="300" height="100">
 </p>
+
+When you push your code to Github, Github will call jenkins and run docker for unit testing. <br>
+<p>
+<img src="images/images.png" alt="images" width="400" height="200">
+</p>
+
+
+More information about <br>
+Docker: https://docs.docker.com/get-started/overview/
