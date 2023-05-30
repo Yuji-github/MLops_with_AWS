@@ -145,10 +145,10 @@ Created Dockerfile is the picture below <br>
 </p>
 
 ### How to run docker
-- Name and optionally a tag in the name:tag format
+- Name and optionally a tag in the name:tag format (latest = NEW) <br>
 
 ```
-docker build -t test:1
+docker build -t test:latest
 ```
 
 ```
@@ -160,7 +160,7 @@ An image is a read-only template with instructions for creating a Docker contain
 <img src="images/docker_images.png" alt="docker images" width="300" height="100">
 </p>
 
-When you push your code to Github, Github will call jenkins and run docker for unit testing. <br>
+When you push your code to GitHub, GitHub will call jenkins and run docker for unit testing. <br>
 <p>
 <img src="images/images.png" alt="images" width="400" height="200">
 </p>
