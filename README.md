@@ -44,24 +44,22 @@ Then you check [System properties -> Environment Variables -> path], System vari
 
 ### How to run Jenkins at localhost
 - Download Jenkins <br>
-1. Run the below code from your terminal(Pycharm)
+1. Run the below code from your terminal (Pycharm) where Jenkins is located. User\Desktop(Jenkins folder location) <br>
 
 ```
 java -jar jenkins.war
 ```
-2. C:\Users\User\Desktop(Jenkins folder location) >java -jar jenkins.war
-3. Open browser, Type below port number for Jenkins
+2. Open browser, Type below port number for Jenkins <br>
 
 ```
-
 localhost:8080
 ```
-When using Jenkins, do steps 1, 2 and 3 every time. <br>
+When using Jenkins, do steps 1 and 2 every time. <br>
 
 ### How to ues Jenkins
 When you open the dashboard, click New Item <br>
 
-<p>
+<p  align="center">
 <img src="images/Jenkins-page.png" alt="Jenkins" width="400" height="300">
 </p>
 
@@ -73,29 +71,29 @@ Look at the picture above <br>
 Next step is What do you want to build. <br>
 
 Please follow the picture below
-<p>
+<p  align="center">
 <img src="images/jenkins-configure1.png" alt="Jenkins-configure1" width="400" height="300">
 </p>
 
 What do you want to run
-- Set ***** (every minute) run
+- Set * * * * * (every minute) run
 
-<p>
+<p  align="center">
 <img src="images/jenkins-configure2.png" alt="Jenkins-configure2" width="400" height="300">
 </p>
 
 Make Pipeline script
-- Click try sample pipeline
+- Click try sample "Pipeline"
 - stage is title
 - echo is comment
 
-<p>
+<p  align="center">
 <img src="images/jenkins-configure3.png" alt="Jenkins-configure3" width="400" height="300">
 </p>
 
 Click Build Now you got the picture below <br>
 
-<p>
+<p  align="center">
 <img src="images/jenkins_StageView.png" alt="stageView" width="400" height="300">
 </p>
 
@@ -110,14 +108,17 @@ Next step, click the Pipeline Syntax <br>
 - bat -> for windows command (This time, build docker )
 
 
-<p>
+<p  align="center">
 <img src="images/jenkins_pipeline.png" alt="pipline" width="400" height="300">
 </p>
 
-This time, created three build. First is "check it" for connect Git success. Second is "build" for create Git clone. Third is "unit test" for run unit test command.
+This time, created three builds.
+* First is "check it" for connect Git success.
+* Second is "build" for create Git clone.
+* Third is "unit test" for run unit test command.
 
 
-<p>
+<p  align="center">
 <img src="images/jenkins_stageview2.png" alt="stageview2" width="300" height="200">
 </p>
 
@@ -125,22 +126,24 @@ More information about <br>
 CI/CD :https://www.simplilearn.com/tutorials/devops-tutorial/continuous-delivery-and-continuous-deployment
 
 # Step 2
-## docker
-Docker is a tool for running your applications inside containers and similar in concept to Virtual Machines (can be run on any OS).<br>
+## Docker
+Docker is a tool for running your applications inside containers and similar in concept to virtual machines (can be run on any OS).<br>
 Containers are great for continuous integration and continuous delivery (CI/CD) workflows. <br>
 - Download and install Docker <br>
 
-You should create Dockerfile on your Pycharm. Docker file name MUST be 'Dockerfile'. <br>
+You should create Dockerfile on your Pycharm. <br>
+Docker file name MUST be 'Dockerfile'. <br>
+
 - Dockerfile works top to bottom <br>
 - Dockerfile reserved word are the picture below <br>
 
-<p>
+<p  align="center">
 <img src="images/docker_reserved_word.png" alt="docker" width="400" height="300">
 </p>
 
 Created Dockerfile is the picture below <br>
 
-<p>
+<p  align="center">
 <img src="images/dockerfile.png" alt="dockerfile" width="400" height="250">
 </p>
 
@@ -156,12 +159,12 @@ docker images
 ```
 
 An image is a read-only template with instructions for creating a Docker container. <br>
-<p>
+<p  align="center">
 <img src="images/docker_images.png" alt="docker images" width="300" height="100">
 </p>
 
-When you push your code to GitHub, GitHub will call jenkins and run docker for unit testing. <br>
-<p>
+When you push your code to the master branch on GitHub, GitHub will call Jenkins, and Jenkins runs Docker for unit testing through the above settings. <br>
+<p  align="center">
 <img src="images/images.png" alt="images" width="400" height="200">
 </p>
 
