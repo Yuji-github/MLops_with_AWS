@@ -36,7 +36,7 @@ if __name__ == "__main__":
     mlflow.set_tracking_uri(URI)
     mlflow_experiment = mlflow.set_experiment("Mlops-with-AWS")
 
-    df = _import_csv("src/Stars.csv")
+    df = _import_csv("Stars.csv")
     this_eda = EDA(df)
 
     if this_eda._check_missing_data():

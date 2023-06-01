@@ -1,8 +1,10 @@
 # base image
 FROM python:3.11-slim
 
+# apt-get install libgomp1 to prevent lightgbm errors
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get purge --auto-remove && apt-get clean
+    apt-get purge --auto-remove && apt-get clean && \
+    apt-get install libgomp1
 
 # update pip
 RUN python -m pip install --upgrade pip --disable-pip-version-check
@@ -11,8 +13,8 @@ RUN python -m pip install --upgrade pip --disable-pip-version-check
 WORKDIR /temp
 
 # copy all
-COPY . .
-RUN pip install -r src/requirements.txt
+COPY src .
+RUN pip install -r requirements.txt
 
 # expose port for Jenkins
 EXPOSE 8080
@@ -21,4 +23,4 @@ EXPOSE 8080
 VOLUME /temp
 
 RUN echo "###############"
-RUN coverage run -m unittest discover
+RUN python -m unittest

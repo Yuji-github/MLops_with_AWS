@@ -1,6 +1,6 @@
 import numpy as np
 from mlflow.models import ModelSignature
-from src.train_interface import TrainInterface
+from train_interface import TrainInterface
 from sklearn.metrics import accuracy_score
 from typing import Any
 

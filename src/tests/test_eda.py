@@ -1,7 +1,7 @@
 from unittest import TestCase
 import pandas as pd
 import numpy as np
-from src.eda import EDA
+from eda import EDA
 import unittest
 
 

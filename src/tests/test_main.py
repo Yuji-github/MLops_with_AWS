@@ -1,4 +1,4 @@
-from src.main import _import_csv
+from main import _import_csv
 from unittest import TestCase
 import unittest.mock as mock
 import pandas as pd
