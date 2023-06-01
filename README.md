@@ -94,7 +94,7 @@ What do you want to run
 Click "Build Now" you got the picture below <br>
 
 <p  align="center">
-<img src="images/jenkins_StageView.png" alt="stageView" width="400" height="300">
+<img src="images/jenkins_stageView.png" alt="stageView" width="400" height="300">
 </p>
 
 If the build is red, it's a failure. <br>
