@@ -82,7 +82,7 @@ What do you want to run
 <img src="images/jenkins-configure2.png" alt="Jenkins-configure2" width="400" height="300">
 </p>
 
-Make Pipeline script
+"Make Pipeline script and explanation of the syntax" <br>
 - Click try sample "Pipeline"
 - stage is title
 - echo is comment
@@ -91,21 +91,23 @@ Make Pipeline script
 <img src="images/jenkins-configure3.png" alt="Jenkins-configure3" width="400" height="300">
 </p>
 
-Click Build Now you got the picture below <br>
+Click "Build Now" you got the picture below <br>
 
 <p  align="center">
 <img src="images/jenkins_StageView.png" alt="stageView" width="400" height="300">
 </p>
 
-If the build is red, it's a failure. You should check the #number -> console output, then fix your code update and run it again.<br>
+If the build is red, it's a failure. <br>
+You should check the "#number" -> "console output".
+Then fix your code update and run it again.<br>
 
-Next step, click the Pipeline Syntax <br>
+Next step, click the "Pipeline Syntax" <br>
 - Checkout: Check out from version control
 - SCM -> Git
 - Repositories -> Git clone URL
-- Credentials -> private access ID & password (Company project)
+- Credentials -> private access ID & password
 - Save it, get script
-- bat -> for windows command (This time, build docker )
+- bat -> for windows command (This time, build docker)
 
 
 <p  align="center">
