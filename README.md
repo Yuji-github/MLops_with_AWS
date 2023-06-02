@@ -153,7 +153,7 @@ Created Dockerfile is the picture below <br>
 - Name and optionally a tag in the name:tag format (latest = NEW) <br>
 
 ```
-docker build -t test:latest
+docker build -t test:latest .
 ```
 
 ```
