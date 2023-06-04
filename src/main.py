@@ -10,23 +10,33 @@ Step 4:
 Step 5:
     Test deployment
 """
-from settings import URI
 import pandas as pd
-from eda import EDA
+from tqdm import tqdm
 import logging
+import mlflow
+from sklearn.ensemble import GradientBoostingClassifier
+import lightgbm as lgb
+from mlflow.models.signature import infer_signature
+
+from train import Train
+from eda import EDA
+from settings import URI
 
 
 def _import_csv(filename: str) -> pd.DataFrame:
     """Import data set with given dir
+
     :param filename:
-    :return:
-        pd.Dataframe
+    :return pd.Dataframe:
     """
     return pd.read_csv(filename)
 
 
 if __name__ == "__main__":
-    df = _import_csv("src/Stars.csv")
+    mlflow.set_tracking_uri(URI)
+    mlflow_experiment = mlflow.set_experiment("Mlops-with-AWS")
+
+    df = _import_csv("Stars.csv")
     this_eda = EDA(df)
 
     if this_eda._check_missing_data():
@@ -34,3 +44,32 @@ if __name__ == "__main__":
 
     this_eda._replace_df_cols()
     x_train, x_test, y_train, y_test = this_eda._spread_df()
+
+    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]
+    train = Train(mlflow)
+
+    for model in models:
+        train.initialise_model(model)
+
+        for learning_rate in tqdm(train.learning_rate_range):
+            for n_estimators in tqdm(train.n_estimators_range, leave=False):
+                for max_depth in tqdm(train.max_depth_range, leave=False):
+
+                    with mlflow.start_run(experiment_id=mlflow_experiment.experiment_id, tags={"version": "v1"}):
+                        y_pred = train._train(
+                            x_train,
+                            y_train,
+                            x_test,
+                            learning_rate=learning_rate,
+                            n_estimators=n_estimators,
+                            max_depth=max_depth,
+                        )
+                        signature = infer_signature(x_train, y_pred)  # specify input and output formats
+
+                        accuracy = train._evaluate(y_test, y_pred)
+
+                        train._logging_params_to_mlflow(
+                            learning_rate=learning_rate, n_estimators=n_estimators, max_depth=max_depth
+                        )
+                        train._logging_eval_to_mlflow(accuracy)
+                        train._logging_model_to_mlflow(signature)

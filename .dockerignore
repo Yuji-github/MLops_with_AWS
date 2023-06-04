@@ -4,3 +4,5 @@ common.txt
 images
 README.md
 /src/README.md
+mlruns
+mlartifacts

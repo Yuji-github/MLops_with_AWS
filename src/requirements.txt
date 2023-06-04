@@ -1,3 +1,5 @@
 mlflow
 pandas
 numpy
+lightgbm
+tqdm
