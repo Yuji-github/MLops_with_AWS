@@ -61,7 +61,7 @@ class Train(TrainInterface):
 
         :return None:
         """
-        if self.model_name is "lightGBM":
+        if self.model_name == "lightGBM":
             self.mlflow.lightgbm.log_model(self.model, artifact_path=self.model_name, signature=signature)
-        elif self.model_name is "GradientBoost":
+        elif self.model_name == "GradientBoost":
             self.mlflow.sklearn.log_model(self.model, artifact_path=self.model_name, signature=signature)
