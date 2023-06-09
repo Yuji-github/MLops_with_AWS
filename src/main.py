@@ -53,7 +53,7 @@ if __name__ == "__main__":
     this_eda._replace_df_cols()
     x_train, x_test, y_train, y_test = this_eda._spread_df()
 
-    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]
+    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]  #
     train = Train(mlflow)
 
     for model in models:
