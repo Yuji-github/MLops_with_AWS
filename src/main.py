@@ -17,10 +17,11 @@ import mlflow
 from sklearn.ensemble import GradientBoostingClassifier
 import lightgbm as lgb
 from mlflow.models.signature import infer_signature
+import subprocess
 
 from train import Train
 from eda import EDA
-from settings import URI
+from settings import TRACKING_SERVER_HOST
 
 
 def _import_csv(filename: str) -> pd.DataFrame:
@@ -33,10 +34,17 @@ def _import_csv(filename: str) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    mlflow.set_tracking_uri(URI)
+    try:
+        subprocess.call(
+            "access_ec2_and_run.sh", shell=True, timeout=10
+        )  # accessing EC2 and running Mlflow from EC2, 10 sec later training runs
+    except subprocess.TimeoutExpired:
+        pass  # to go through the next steps
+
+    mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
     mlflow_experiment = mlflow.set_experiment("Mlops-with-AWS")
 
-    df = _import_csv("Stars.csv")
+    df = _import_csv("src/Stars.csv")
     this_eda = EDA(df)
 
     if this_eda._check_missing_data():
@@ -45,7 +53,7 @@ if __name__ == "__main__":
     this_eda._replace_df_cols()
     x_train, x_test, y_train, y_test = this_eda._spread_df()
 
-    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]
+    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]  #
     train = Train(mlflow)
 
     for model in models:
