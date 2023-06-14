@@ -5,7 +5,7 @@ Step 2:
     Create a model : Save the artifacts on S3
 Step 3:
     Evaluate the model : Save the artifacts on S3
-Step 4:
+Step 4: (from this run registration_and_deployment.py)
     Deploy the model : Save the artifacts on Sagemaker
 Step 5:
     Test deployment
