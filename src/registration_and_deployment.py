@@ -10,7 +10,7 @@ import json
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--os", "-os", type=str, default="windows", help="windows or others")
+    parser.add_argument("--windows", "-w", type=bool, default=True, help="windows or others")
 
     # registry to ECR
     parser.add_argument(
@@ -74,7 +74,7 @@ def download_s3(model_folder_name_s3: str, folder: str) -> str:
     folder = download
     """
 
-    def separate_path(model_folder_name_s3: str) -> Tuple[str, str]:
+    def separate_path(model_folder_name_smh: str) -> Tuple[str, str]:
         """Separating into bucket and path
 
         :param model_folder_name_s3:
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     # registration image to ECR
     with open("registry.sh", "w") as f:  # create a folder at this dir
         model_uri_local_folder = download_s3(args.model_folder_name_s3, args.folder)
-        if args.os == "windows":
+        if args.windows:
             model_uri_local_folder = model_uri_local_folder.replace(
                 "\\", "/"
             )  # bash file does not work with slash on Windows
