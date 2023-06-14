@@ -5,9 +5,9 @@ Step 2:
     Create a model : Save the artifacts on S3
 Step 3:
     Evaluate the model : Save the artifacts on S3
-Step 4: (from this run registration_and_deployment.py)
+Step 4: (this runs at registration_and_deployment.py)
     Deploy the model : Save the artifacts on Sagemaker
-Step 5:
+Step 5: (this runs at registration_and_deployment.py)
     Test deployment
 """
 import pandas as pd

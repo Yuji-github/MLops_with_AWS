@@ -1,9 +1,9 @@
 """Entry point to run the code
-Step 1: (this run start_training.py)
+Step 1: (this runs at start_training.py)
     EDA (Exploratory Data Analysis)
-Step 2: (this run start_training.py)
+Step 2: (this runs at start_training.py)
     Create a model : Save the artifacts on S3
-Step 3: (this run start_training.py)
+Step 3: (this runs at start_training.py)
     Evaluate the model : Save the artifacts on S3
 Step 4:
     Deploy the model : Save the artifacts on Sagemaker
