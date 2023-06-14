@@ -1,11 +1,11 @@
-from main import _import_csv
+from start_training import _import_csv
 from unittest import TestCase
 import unittest.mock as mock
 import pandas as pd
 import unittest
 
 
-class TestMain(TestCase):
+class TestStartTraining(TestCase):
     def test_import_csv(self):
         """Testing _import_csv
         return type is pandas.DataFrame

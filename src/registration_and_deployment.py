@@ -1,3 +1,16 @@
+"""Entry point to run the code
+Step 1: (this run start_training.py)
+    EDA (Exploratory Data Analysis)
+Step 2: (this run start_training.py)
+    Create a model : Save the artifacts on S3
+Step 3: (this run start_training.py)
+    Evaluate the model : Save the artifacts on S3
+Step 4:
+    Deploy the model : Save the artifacts on Sagemaker
+Step 5:
+    Test deployment
+"""
+
 import boto3
 import os
 import argparse
