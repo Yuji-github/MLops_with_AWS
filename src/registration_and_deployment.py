@@ -14,9 +14,11 @@ def parse_args():
 
     # registry to ECR
     parser.add_argument(
-        "--model_folder_name_s3", "-mf", type=str, default=None, help="folder path for s3 to create image to ECR"
+        "--folder_name_s3", "-fs3", type=str, default=None, help="folder that contains best model from s3 bucket"
     )
-    parser.add_argument("--folder", "-f", type=str, default="download", help="saving files to the folder from s3")
+    parser.add_argument(
+        "--folder", "-f", type=str, default="download", help="saving files to the folder from s3 bucket"
+    )
     parser.add_argument(
         "--model_name_for_ECR", "-mne", type=str, default="latest-model-ecr", help="model name for registry on ECR"
     )
@@ -26,7 +28,11 @@ def parse_args():
         "--deployment", "-d", type=bool, default=False, help="if true, then, it deploys the model to sagemaker"
     )
     parser.add_argument(
-        "--model_name", "-mn", type=str, default="latest-model-sagemaker", help="model name for deployment on sagemaker"
+        "--model_name_for_Sagemaker",
+        "-mns",
+        type=str,
+        default="latest-model-sagemaker",
+        help="model name for deployment on sagemaker",
     )
 
     # simple config for deployment on Sagemaker
@@ -37,7 +43,9 @@ def parse_args():
         default=False,
         help="create a simple config dict to push the image to sagemaker",
     )
-    parser.add_argument("--config", "-c", type=json.loads, default=None, help="config for pushing image to sagemaker")
+    parser.add_argument(
+        "--dict_config", "-dc", type=json.loads, default=None, help="dict config for pushing image to sagemaker"
+    )
     parser.add_argument(
         "--execution_role_arn",
         "-arn",
@@ -62,10 +70,10 @@ def parse_args():
     return parser.parse_args()
 
 
-def download_s3(model_folder_name_s3: str, folder: str) -> str:
+def download_s3(folder_name_s3: str, folder: str) -> str:
     """Downloading files from s3 bucket folder
 
-    :param model_folder_name_s3:
+    :param folder_name_s3:
     :param folder:
     :return:
 
@@ -74,21 +82,21 @@ def download_s3(model_folder_name_s3: str, folder: str) -> str:
     folder = download
     """
 
-    def separate_path(model_folder_name_smh: str) -> Tuple[str, str]:
+    def separate_path(folder_name_s3: str) -> Tuple[str, str]:
         """Separating into bucket and path
 
-        :param model_folder_name_s3:
+        :param folder_name_s3:
              s3://s3-bucket-name/1234/5678/artifacts/GradientBoost
 
         :return bucket_name,bucket_prefix:
             s3-bucket-name, /1234/5678/artifacts/GradientBoost
         """
-        parse_object = urlparse(model_folder_name_s3)
+        parse_object = urlparse(folder_name_s3)
         bucket_name = parse_object.netloc
         bucket_prefix = parse_object.path[1:]
         return bucket_name, bucket_prefix
 
-    bucket_name, bucket_prefix = separate_path(model_folder_name_s3)
+    bucket_name, bucket_prefix = separate_path(folder_name_s3)
 
     if not os.path.exists(folder):
         os.mkdir(folder)
@@ -121,7 +129,7 @@ if __name__ == "__main__":
 
     # registration image to ECR
     with open("registry.sh", "w") as f:  # create a folder at this dir
-        model_uri_local_folder = download_s3(args.model_folder_name_s3, args.folder)
+        model_uri_local_folder = download_s3(args.folder_name_s3, args.folder)
         if args.windows:
             model_uri_local_folder = model_uri_local_folder.replace(
                 "\\", "/"
@@ -148,6 +156,6 @@ if __name__ == "__main__":
                 instance_count=args.instance_count,
             )
         else:
-            config = args.config
+            config = args.dict_config
 
-        deploy_model_to_sagemaker(args.model_name, model_uri_local_folder, config)
+        deploy_model_to_sagemaker(args.model_name_for_Sagemaker, model_uri_local_folder, config)
