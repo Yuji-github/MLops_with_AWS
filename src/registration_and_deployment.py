@@ -19,6 +19,7 @@ from typing import Tuple
 from deploy import create_simple_dict_for_sagemaker, deploy_model_to_sagemaker
 import subprocess
 import json
+import os
 
 
 def parse_args():
@@ -27,7 +28,11 @@ def parse_args():
 
     # registry to ECR
     parser.add_argument(
-        "--folder_name_s3", "-fs3", type=str, default=None, help="folder that contains best model from s3 bucket"
+        "--folder_name_s3",
+        "-fs3",
+        type=str,
+        default="s3://mlflow-s3-bucket-1/691247546908906445/5c21220096254a1da0bede5c26845f4c/artifacts/GradientBoost",
+        help="folder that contains best model from s3 bucket",
     )
     parser.add_argument(
         "--folder", "-f", type=str, default="download", help="saving files to the folder from s3 bucket"
@@ -113,12 +118,9 @@ def download_s3(folder_name_s3: str, folder: str) -> str:
 
     if not os.path.exists(folder):
         os.mkdir(folder)
-        os.chdir(folder)
         print("Folder %s created!" % folder)
-    else:
-        os.chdir(folder)
 
-    cur_path = os.getcwd()
+    saving_path = os.path.join(os.getcwd(), folder)
     client_s3 = boto3.client("s3")  # boto3.client(service_name): The name of a service, e.g. 's3' or 'ec2'.
     list_s3 = client_s3.list_objects_v2(
         Bucket=bucket_name, Prefix=bucket_prefix
@@ -131,18 +133,19 @@ def download_s3(folder_name_s3: str, folder: str) -> str:
         except IndexError:
             filename = obj["Key"]
 
-        localfilename = os.path.join(cur_path, filename)
+        localfilename = os.path.join(saving_path, filename)
         client_s3.download_file(bucket_name, obj["Key"], localfilename)
 
-    return cur_path
+    return saving_path
 
 
 if __name__ == "__main__":
     args = parse_args()
 
+    model_uri_local_folder = download_s3(args.folder_name_s3, args.folder)
+
     # registration image to ECR
     with open("registry.sh", "w") as f:  # create a folder at this dir
-        model_uri_local_folder = download_s3(args.folder_name_s3, args.folder)
         if args.windows:
             model_uri_local_folder = model_uri_local_folder.replace(
                 "\\", "/"
@@ -155,7 +158,9 @@ if __name__ == "__main__":
     f.close()
 
     # running the registry.sh
-    subprocess.call("registry.sh", shell=True)
+    subprocess.call(
+        ["bash", "registry.sh"], shell=True, env=os.environ.copy()
+    )  # env=os.environ.copy() -> copying virtual env
 
     # deployment to Sagemaker
     if args.deployment:
