@@ -7,12 +7,12 @@ Step 3: (this runs at start_training.py)
     Evaluate the model : Save the artifacts on S3
 Step 4:
     Deploy the model : Save the artifacts on Sagemaker
+    *Make sure your Docker Desktop is running while running
 Step 5:
     Test deployment
 """
 
 import boto3
-import os
 import argparse
 from urllib.parse import urlparse
 from typing import Tuple
@@ -28,10 +28,17 @@ def parse_args():
 
     # registry to ECR
     parser.add_argument(
+        "--registry_image_ecr",
+        "-ri",
+        type=bool,
+        default=True,
+        help="registry image on ECR",
+    )
+    parser.add_argument(
         "--folder_name_s3",
         "-fs3",
         type=str,
-        default="s3://mlflow-s3-bucket-1/691247546908906445/5c21220096254a1da0bede5c26845f4c/artifacts/GradientBoost",
+        default=None,
         help="folder that contains best model from s3 bucket",
     )
     parser.add_argument(
@@ -74,7 +81,7 @@ def parse_args():
     parser.add_argument(
         "--bucket_name_for_sagemaker", "-bn", type=str, default=None, help="bucket name for deployment on sagemaker"
     )
-    parser.add_argument("--image_uri_ecr", "-iu", type=str, default=None, help="image uri on ECR")
+    parser.add_argument("--image_url_ecr", "-iu", type=str, default=None, help="image url on ECR")
     parser.add_argument("--region_name", "-rn", type=str, default=None, help="region name for sagemaker")
     parser.add_argument(
         "--instance_type",
@@ -142,25 +149,26 @@ def download_s3(folder_name_s3: str, folder: str) -> str:
 if __name__ == "__main__":
     args = parse_args()
 
-    model_uri_local_folder = download_s3(args.folder_name_s3, args.folder)
-
     # registration image to ECR
-    with open("registry.sh", "w") as f:  # create a folder at this dir
-        if args.windows:
-            model_uri_local_folder = model_uri_local_folder.replace(
-                "\\", "/"
-            )  # bash file does not work with slash on Windows
+    if args.registry_image_ecr:
+        model_uri_local_folder = download_s3(args.folder_name_s3, args.folder)
 
-        f.write(f"cd {model_uri_local_folder}" + "\n")  # change the dir
-        f.write(
-            f"mlflow sagemaker build-and-push-container --build --push -c {args.model_name_for_ECR}"
-        )  # push the image to ECR
-    f.close()
+        with open("registry.sh", "w") as f:  # create a folder at this dir
+            if args.windows:
+                model_uri_local_folder = model_uri_local_folder.replace(
+                    "\\", "/"
+                )  # bash file does not work with slash on Windows
 
-    # running the registry.sh
-    subprocess.call(
-        ["bash", "registry.sh"], shell=True, env=os.environ.copy()
-    )  # env=os.environ.copy() -> copying virtual env
+            f.write(f"cd {model_uri_local_folder}" + "\n")  # change the dir
+            f.write(
+                f"mlflow sagemaker build-and-push-container --build --push -c {args.model_name_for_ECR}"
+            )  # push the image to ECR
+        f.close()
+
+        # running the registry.sh
+        subprocess.call(
+            ["bash", "registry.sh"], shell=True, env=os.environ.copy()
+        )  # env=os.environ.copy() -> copying virtual env
 
     # deployment to Sagemaker
     if args.deployment:
@@ -168,7 +176,7 @@ if __name__ == "__main__":
             config = create_simple_dict_for_sagemaker(
                 execution_role_arn=args.execution_role_arn,
                 bucket=args.bucket_name_for_sagemaker,
-                image_uri_ecr=args.image_uri_ecr,
+                image_url_ecr=args.image_url_ecr,
                 region_name=args.region_name,
                 instance_type=args.instance_type,
                 instance_count=args.instance_count,
