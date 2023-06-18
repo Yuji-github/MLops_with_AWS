@@ -48,7 +48,7 @@ python src/registration_and_deployment.py --windows True
 --create_config True
 -arn arn:aws:iam::123456789:role/service-role/AmazonSageMaker-ExecutionRole-123456789
 -bn sagemaker-mlflow-with-aws
--iu 1234567899.dkr.ecr.ap-southeast-2.amazonaws.com/ECR_ImageNameYouGave.aka.mne
+-iu 1234567899.dkr.ecr.ap-southeast-2.amazonaws.com/ECR_ImageNameYouGave.aka.mne:version
 -rn ap-southeast-2
 -it ml.c5.large
 ```
@@ -63,7 +63,7 @@ python src/registration_and_deployment.py --windows True --deployment True
 --create_config True
 -arn arn:aws:iam::123456789:role/service-role/AmazonSageMaker-ExecutionRole-123456789
 -bn sagemaker-mlflow-with-aws
--iu 1234567899.dkr.ecr.ap-southeast-2.amazonaws.com/ECR_ImageNameYouGave.aka.mne
+-iu 1234567899.dkr.ecr.ap-southeast-2.amazonaws.com/ECR_ImageNameYouGave.aka.mne:version
 -rn ap-southeast-2
 -it ml.c5.large
 ```
