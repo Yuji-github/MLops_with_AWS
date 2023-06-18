@@ -198,4 +198,3 @@ if __name__ == "__main__":
             config = args.dict_config
 
         deploy_model_to_sagemaker(args.model_name_for_Sagemaker, model_uri_local_folder, config)
-from mlflow.utils import virtualenv
