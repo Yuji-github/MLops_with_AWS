@@ -1,10 +1,6 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn import datasets
 import json
 import boto3
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from eda import EDA
 
 global app_name
@@ -21,19 +17,19 @@ def check_status(app_name: str):
     return endpoint_status
 
 
-def query_endpoint(app_name: str, input_json):
-    client = boto3.session.Session().client("sagemaker-runtime", region)
-
-    response = client.invoke_endpoint(
-        EndpointName=app_name,
-        Body=input_json,
-        ContentType="application/json; format=pandas-split",
-    )
-    print(response)
-    preds = response["Body"].read().decode("ascii")
-    preds = json.loads(preds)
-    print("Received response: {}".format(preds))
-    return preds
+# def query_endpoint(app_name: str, input_json):
+#     # client = boto3.session.Session().client("sagemaker-runtime", region)
+#     client = boto3.client('sagemaker-runtime')
+#     response = client.invoke_endpoint(
+#         EndpointName=app_name,
+#         Body=input_json,
+#         ContentType="application/json; format=pandas-split",
+#     )
+#     print(response)
+#     preds = response["Body"].read().decode("ascii")
+#     preds = json.loads(preds)
+#     print("Received response: {}".format(preds))
+#     return None
 
 
 ## check endpoint status
@@ -46,8 +42,19 @@ this_eda = EDA(df)
 this_eda._replace_df_cols()
 x_train, x_test, y_train, y_test = this_eda._spread_df()
 
-
+actual = y_test.iloc[3]
 # ## create test data and make inference from enpoint
-query_input = pd.DataFrame(x_test).iloc[[3]].to_json(orient="split")
-print(query_input)
-# prediction = query_endpoint(app_name=app_name, input_json=query_input)
+data = {"instances": [x_test[3].tolist()]}  # need to be 2D array
+
+print(data)
+
+client = boto3.client("sagemaker-runtime")
+
+# Body and ContentType must be same
+# invoke_endpoint predicts the results with given values (Body)
+response = client.invoke_endpoint(EndpointName=app_name, Body=json.dumps(data), ContentType="application/json")
+
+# decoding (converting) the response
+preds = response["Body"].read().decode("ascii")
+preds = json.loads(preds)
+print(f"Received response: {preds}, actual {actual}")
