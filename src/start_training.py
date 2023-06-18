@@ -5,9 +5,9 @@ Step 2:
     Create a model : Save the artifacts on S3
 Step 3:
     Evaluate the model : Save the artifacts on S3
-Step 4:
+Step 4: (this runs at registration_and_deployment.py)
     Deploy the model : Save the artifacts on Sagemaker
-Step 5:
+Step 5: (this runs at registration_and_deployment.py)
     Test deployment
 """
 import pandas as pd
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     this_eda._replace_df_cols()
     x_train, x_test, y_train, y_test = this_eda._spread_df()
 
-    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]  #
+    models = [[GradientBoostingClassifier(), "GradientBoost"], [lgb.LGBMClassifier(), "lightGBM"]]
     train = Train(mlflow)
 
     for model in models:
