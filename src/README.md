@@ -72,3 +72,5 @@ python src/registration_and_deployment.py --windows True --deployment True
 - Name Syntax: AWS does not accept "_", change the name.
 - Bash Not Found: You need to go to settings -> terminal -> uncheck activate virtual if you use Pycharm and run venv.
 - AWS Region Errors: open terminal ```aws configure```, then, update your region (after your secret key).
+- mlflow.exceptions.MlflowException [TImeOut]: Due to the python version (3.9.13 works): Check python_env.yaml;
+if the version is 3.11.3, it gives the errors "mlflow.utils.virtualenv: Installing python 3.11.3 if it does not exist" on CloudWatch (AWS)
