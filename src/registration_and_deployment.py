@@ -20,6 +20,7 @@ from deploy import create_simple_dict_for_sagemaker, deploy_model_to_sagemaker
 import subprocess
 import json
 import os
+import docker
 
 
 def parse_args():
@@ -172,11 +173,23 @@ if __name__ == "__main__":
 
     # deployment to Sagemaker
     if args.deployment:
+
+        # get image tag from Docker (local) as the tag is same as on ECR
+        docker_client = docker.from_env()
+        image_url_ecr_with_tag: str = ""  # to replace the value with the tag
+
+        for image_tags in docker_client.images.list():
+            if [image_tag for image_tag in image_tags.tags if args.image_url_ecr in image_tag]:
+                image_url_ecr_with_tag = [
+                    image_tag for image_tag in image_tags.tags if args.image_url_ecr in image_tag
+                ][0]
+                break
+
         if args.create_config:
             config = create_simple_dict_for_sagemaker(
                 execution_role_arn=args.execution_role_arn,
                 bucket=args.bucket_name_for_sagemaker,
-                image_url_ecr=args.image_url_ecr,
+                image_url_ecr=image_url_ecr_with_tag,
                 region_name=args.region_name,
                 instance_type=args.instance_type,
                 instance_count=args.instance_count,
@@ -185,3 +198,4 @@ if __name__ == "__main__":
             config = args.dict_config
 
         deploy_model_to_sagemaker(args.model_name_for_Sagemaker, model_uri_local_folder, config)
+from mlflow.utils import virtualenv

@@ -5,3 +5,4 @@ lightgbm
 tqdm
 boto3
 awscli
+docker
