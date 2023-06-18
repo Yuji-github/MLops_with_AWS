@@ -53,6 +53,7 @@ client = boto3.client("sagemaker-runtime")
 # Body and ContentType must be same
 # invoke_endpoint predicts the results with given values (Body)
 # reference: https://medium.com/ml-bytes/how-to-make-predictions-against-a-sagemaker-endpoint-using-tensorflow-serving-8b423b9b316a
+
 response = client.invoke_endpoint(EndpointName=app_name, Body=json.dumps(data), ContentType="application/json")
 
 # decoding (converting) the response
