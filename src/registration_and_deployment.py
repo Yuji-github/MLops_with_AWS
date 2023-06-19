@@ -25,13 +25,13 @@ import docker
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--windows", "-w", type=bool, default=True, help="windows or others")
+    parser.add_argument("--windows", "-w", type=eval, choices=[True, False], default=True, help="windows or others")
 
     # registry to ECR
     parser.add_argument(
         "--registry_image_ecr",
         "-ri",
-        type=bool,
+        type=eval,
         default=True,
         help="registry image on ECR",
     )
@@ -45,13 +45,19 @@ def parse_args():
     parser.add_argument(
         "--folder", "-f", type=str, default="download", help="saving files to the folder from s3 bucket"
     )
+    parser.add_argument("--local_folder_path", "-lfp", type=str, default=None, help="selecting local folder path")
     parser.add_argument(
         "--model_name_for_ECR", "-mne", type=str, default="latest-model-ecr", help="model name for registry on ECR"
     )
 
     # deployment on Sagemaker
     parser.add_argument(
-        "--deployment", "-d", type=bool, default=False, help="if true, then, it deploys the model to sagemaker"
+        "--deployment",
+        "-d",
+        type=eval,
+        choices=[True, False],
+        default=False,
+        help="if true, then, it deploys the model to sagemaker",
     )
     parser.add_argument(
         "--model_name_for_Sagemaker",
@@ -65,7 +71,8 @@ def parse_args():
     parser.add_argument(
         "--create_config",
         "-cc",
-        type=bool,
+        type=eval,
+        choices=[True, False],
         default=False,
         help="create a simple config dict to push the image to sagemaker",
     )
@@ -170,6 +177,8 @@ if __name__ == "__main__":
         subprocess.call(
             ["bash", "registry.sh"], shell=True, env=os.environ.copy()
         )  # env=os.environ.copy() -> copying virtual env
+    else:
+        model_uri_local_folder = args.local_folder_path
 
     # deployment to Sagemaker
     if args.deployment:
