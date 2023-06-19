@@ -23,7 +23,7 @@ import os
 import docker
 
 
-def parse_args():
+def parse_args() -> argparse:
     parser = argparse.ArgumentParser()
     parser.add_argument("--windows", "-w", type=eval, choices=[True, False], default=True, help="windows or others")
 
@@ -32,6 +32,7 @@ def parse_args():
         "--registry_image_ecr",
         "-ri",
         type=eval,
+        choices=[True, False],
         default=True,
         help="registry image on ECR",
     )
