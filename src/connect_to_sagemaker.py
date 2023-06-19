@@ -6,14 +6,21 @@ import argparse
 import random
 
 
-def check_status(endpoint_name: str, region: str):
+def check_status(endpoint_name: str, region: str) -> str:
+    """Checking status of sagemaker
+    InService means running the endpoint
+
+    :param endpoint_name:
+    :param region:
+    :return str:
+    """
     sage_client = boto3.client("sagemaker", region_name=region)
     endpoint_description = sage_client.describe_endpoint(EndpointName=endpoint_name)
     endpoint_status = endpoint_description["EndpointStatus"]
     return endpoint_status
 
 
-def parse_args():
+def parse_args() -> argparse:
     parser = argparse.ArgumentParser()
     parser.add_argument("--endpoint_name", type=str, default=None, help="EndPoint Name on Sagemaker")
     parser.add_argument("--region", type=str, default="ap-southeast-2", help="Region where in Service")
